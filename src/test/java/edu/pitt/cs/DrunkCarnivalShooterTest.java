@@ -1,5 +1,6 @@
 package edu.pitt.cs;
 
+import gov.nasa.jpf.vm.Verify;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,9 +36,15 @@ public class DrunkCarnivalShooterTest extends TestJPF {
 		 * Verify API, look at:
 		 * https://github.com/javapathfinder/jpf-core/wiki/Verify-API-of-JPF
 		 */
-		
+
+        targetChoice= Verify.getInt(0,3);
+
+        for (int i = 0; i <4; i++) {
+            targets[i]=Verify.getBoolean();
+        }
 		// Create the game
-		shooter = DrunkCarnivalShooter.createInstance(InstanceType.IMPL);
+//		shooter = DrunkCarnivalShooter.createInstance(InstanceType.IMPL);
+        shooter = DrunkCarnivalShooter.createInstance(InstanceType.BUGGY);
 		// Set up the targets in the game to reflect the targets array
 		for (int i = 0; i < 4; i++) {
 			if (targets[i] == false) {
@@ -103,5 +110,12 @@ public class DrunkCarnivalShooterTest extends TestJPF {
 		System.out.println(failString);
 		
 		// TODO: Implement
+        shooter.shoot(targetChoice,builder);
+
+        int count=0;
+        for (int i = 0; i <4; i++) {
+            if(shooter.isTargetStanding(i)) count++;
+        }
+        assertEquals(failString,count,shooter.getRemainingTargetNum());
 	}
 }
