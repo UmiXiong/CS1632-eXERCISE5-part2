@@ -97,7 +97,7 @@ public class DrunkCarnivalShooterImpl implements DrunkCarnivalShooter {
         if (takeDownTarget(newT)) {
             builder.append("You hit target #" + newT
                     + "! \"The Force is strong with this one.\", Darth opines.\n");
-            remainingTargetNum--;
+//            remainingTargetNum--;
             return true;
         } else {
             builder.append("You miss! \"Do or do not. There is no try.\", Yoda chides.\n");

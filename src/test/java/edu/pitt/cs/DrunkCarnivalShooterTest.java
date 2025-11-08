@@ -108,8 +108,19 @@ public class DrunkCarnivalShooterTest extends TestJPF {
 
         // A failstring useful to pass to assertions to get a more descriptive error.
         String failString = "Failure in " + shooter.getRoundString() + " (targetChoice=" + targetChoice + "):";
-        System.out.println(failString);
+//        System.out.println(failString);
+
+        shooter.shoot(targetChoice, builder);
+
+        int count=0;
+        for (int i = 0; i <4; i++) {
+            if(shooter.isTargetStanding(i))count++;
+        }
+
+//        System.out.println(count+ " "+shooter.getRemainingTargetNum());
 
         // TODO: Implement
+
+        assertEquals(failString, count, shooter.getRemainingTargetNum());
     }
 }
