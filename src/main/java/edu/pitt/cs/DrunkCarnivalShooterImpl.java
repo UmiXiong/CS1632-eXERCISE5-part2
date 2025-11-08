@@ -1,12 +1,11 @@
 package edu.pitt.cs;
-
-import gov.nasa.jpf.vm.Verify;
-
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
+import gov.nasa.jpf.annotation.FilterField;
+import gov.nasa.jpf.vm.Verify;
 
 
 /**
@@ -19,7 +18,8 @@ public class DrunkCarnivalShooterImpl implements DrunkCarnivalShooter {
     private Random rand;
     private ArrayList<Boolean> targets;
     private int remainingTargetNum;
-    private int roundNum;
+    @FilterField private int roundNum;
+    //    private int roundNum;
 
     /**
      * Constructor. Creates 4 targets for the player to shoot. Not a particularly
@@ -50,7 +50,7 @@ public class DrunkCarnivalShooterImpl implements DrunkCarnivalShooter {
      */
     private int shootFuzz(int t, StringBuilder builder) {
         // offsetNum couldn't be smaller than 0
-        int offsetNum = rand.nextInt(3);
+        int offsetNum = rand.nextInt(3)-1;
         int fuzzedT = t + offsetNum;
         if (offsetNum > 0) {
             builder.append("You aimed at target #" + t
@@ -114,6 +114,7 @@ public class DrunkCarnivalShooterImpl implements DrunkCarnivalShooter {
      * @return true if the target was standing, false otherwise
      */
     public boolean takeDownTarget(int t) {
+        if(t<0||t>=targets.size()) return false;
         if (isTargetStanding(t)) {
             targets.set(t, false);
             remainingTargetNum--;
